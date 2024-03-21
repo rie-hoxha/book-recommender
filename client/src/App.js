@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button, List, Card } from 'antd';
-import { UserOutlined, RobotOutlined } from '@ant-design/icons';
+
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -28,7 +28,6 @@ function App() {
     <div style={{ padding: '50px' }}>
       <Card title="Book Recommender Chatbot">
         <Input
-          prefix={<UserOutlined />}
           placeholder="Ask for a book recommendation..."
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
@@ -43,7 +42,6 @@ function App() {
           renderItem={item => (
             <List.Item>
               <List.Item.Meta
-                avatar={<RobotOutlined />} // Robot icon as avatar
                 title={<a href="https://ant.design">{item.Book}</a>}
                 description={item.Feedback}
               />
@@ -55,6 +53,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

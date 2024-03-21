@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Recommender Chatbot</title>
+</head>
+<body>
+    <h1>Book Recommender Chatbot</h1>
+    <input type="text" id="userInput" placeholder="Ask for a book recommendation...">
+    <button onclick="sendQuery()">Ask</button>
+    <div id="response"></div>
+
+    <script>
+        async function sendQuery() {
+    const userInput = document.getElementById('userInput').value;
+    const responseElement = document.getElementById('response');
+    
+    try {
+        const response = await fetch('http://127.0.0.1:8000/recommend/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({message: userInput}),
+        });
+        
+        const result = await response.json();
+        
+        // Check if result.response is an object and has the property 'Book'
+        if (result.response && typeof result.response === 'object' && result.response.Book) {
+            const book = result.response;
+            responseElement.innerHTML = `<p><strong>${book.Book}</strong> - Rating: ${book.Rate}<br>${book.Feedback}</p>`;
+        } else {
+            responseElement.innerText = 'No book found or wrong format received.';
+        }
+    } catch (error) {
+        responseElement.innerText = 'An error occurred while fetching recommendations.';
+        console.error('Error during fetch operation:', error);
+    }
+}
+
+    </script>
+</body>
+</html>
